@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EarnSite | Dashboard | Power By Nediya</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #facc15; /* Black */
+      --secondary: #3b82f6; /* Green */
+      --success: #10b981; /* Gold */
+      --danger: #ef4444; /* Red */
+      --dark-bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--dark-bg);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(250, 204, 21, 0.1) 0%, transparent 20%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px; /* Space for bottom ads */
+    }
+
+    /* ====== NAVBAR ====== */
+    .navbar {
+      width: 100%;
+      max-width: 1200px;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-radius: 0 0 20px 20px;
+    }
+
+    .navbar h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #fff, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    #user-dp {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #user-dp:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+    }
+
+    #logout-btn {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    #logout-btn:hover {
+      background: var(--danger);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ====== MAIN CONTAINER ====== */
+    .dashboard {
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    /* ====== STATS CARDS ====== */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .cards .card:last-child {
+      grid-column: span 2;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .card h3 {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card p {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    
+    #coin-count { color: var(--primary); text-shadow: 0 0 20px rgba(250, 204, 21, 0.3); }
+    #ref-count { color: var(--secondary); }
+    #user-email { font-size: 1.1rem; color: #cbd5e1; word-break: break-all; }
+
+    /* ====== REFERRAL SECTION ====== */
+    .referral {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .referral h3 {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ref-box {
+      display: flex;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px;
+      border-radius: 10px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .ref-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .ref-box button {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .ref-box button:hover {
+      filter: brightness(1.2);
+    }
+
+    /* ====== BUTTONS & ACTIONS ====== */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #daily-bonus-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    #daily-bonus-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    #daily-section {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px dashed var(--success);
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      color: var(--success);
+      font-weight: 600;
+      margin-top: -10px; 
+      display: none; 
+    }
+
+    #withdraw-btn {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    #withdraw-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+    }
+
+    /* ====== ADS SECTION ====== */
+    .ads {
+      background: #000;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #333;
+      margin-top: 10px;
+    }
+    
+    .ads h3 {
+      color: #737373;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .ad-banner {
+      background: #111;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      min-height: 80px; /* Ensure ad has space to load */
+    }
+
+    /* Watch Ad Button */
+    .btn.watch {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.1);
+    }
+    .btn.watch:hover {
+      background: var(--primary);
+      color: #000;
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
+    }
+
+    /* Native Ad Container Style */
+    #container-5cef9dcf409e83584d347d6b6e0faa93 {
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* ====== POPUP MODAL ====== */
+    .update-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+      display: none; 
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .update-content {
+      background: #1e293b;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .update-content h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+
+    .update-content p {
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    #close-update {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .cards { grid-template-columns: 1fr; }
+      .cards .card:last-child { grid-column: span 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <h2><i class="fa-solid fa-coins"></i> EarnSite [Nediya]</h2>
+    
+    <div class="nav-right">
+      <a href="profile.html">
+        <img id="user-dp" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile">
+      </a>
+      
+      <button id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+    
+    <section class="cards">
+      <div class="card">
+        <h3><i class="fa-solid fa-sack-dollar"></i> My Balance Check</h3>
+        <p id="coin-count">0</p>
+      </div>
+      <div class="card">
+        <h3><i class="fa-solid fa-users"></i> Referrals Check</h3>
+        <p id="ref-count">0</p>
+      </div>
+      <div class="card">
+        <h3><i class="fa-solid fa-envelope"></i> Logged in as Gmail</h3>
+        <p id="user-email">Loading This...</p>
+      </div>
+    </section>
+
+    <section class="referral">
+      <h3><i class="fa-solid fa-share-nodes"></i> Invite Friends & Earn</h3>
+      <div class="ref-box">
+        <input id="ref-link" readonly value="Loading Your link...">
+        <button id="copy-ref"><i class="fa-regular fa-copy"></i></button>
+      </div>
+    </section>
+
+    <button id="daily-bonus-btn" class="btn">
+      <i class="fa-solid fa-gift"></i> Daily Reward Check
+    </button>
+    <div id="daily-section">
+      <p id="daily-msg">Checking your daily login...</p>
+    </div>
+<button class="btn" style="background: #6366f1; color: white; margin-top: 10px;" onclick="window.location.href='tasks.html'">
+  <i class="fa-solid fa-list-check"></i> Ezi Complete Tasks & Earn
+</button>
+    <button id="withdraw-btn" class="btn">
+      <i class="fa-solid fa-money-bill-transfer"></i> Withdraw Money
+    </button>
+
+    <section class="ads">
+      <h3>Watch & Earn (Power By Nediya)</h3>
+      
+      <div class="ad-banner">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : 'de2647c0251927687fa040938d4e2e9f',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//underpantsjokeimmunity.com/de2647c0251927687fa040938d4e2e9f/invoke.js"></script>
+      </div>
+
+      <button id="watch-ad-btn" class="btn watch" onclick="window.open('https://underpantsjokeimmunity.com/v24uc9er?key=6ece520d6076bda99d7ac53472cb309f', '_blank')">
+        <i class="fa-solid fa-play"></i> Watch Video Ad
+      </button>
+
+      <div id="container-5cef9dcf409e83584d347d6b6e0faa93"></div>
+
+    </section>
+
+  </main>
+
+  <div id="update-popup" class="update-popup">
+    <div class="update-content">
+      <h3><i class="fa-solid fa-rocket"></i> Update Notice</h3>
+      <p id="update-text">New update is available!</p>
+      <button id="close-update">Got it!</button>
+    </div>
+  </div>
+
+  <script>
+    // JS Logic for buttons and Popups
+    document.getElementById("withdraw-btn").addEventListener("click", function () {
+        window.location.href = "withdraw.html";
+    });
+
+    // Show update popup only once
+    const latestVersion = "1.0.5"; 
+
+    if (localStorage.getItem("siteVersion") !== latestVersion) {
+        document.getElementById("update-popup").style.display = "flex";
+        document.getElementById("update-text").innerText =
+        "Welcome to the new dashboard! We improved the design and fixed bugs.";
+
+        document.getElementById("close-update").onclick = () => {
+        document.getElementById("update-popup").style.display = "none";
+        localStorage.setItem("siteVersion", latestVersion);
+        };
+    }
+  </script>
+
+  <script type="module" src="dashboard.js"></script>
+
+  <script type="text/javascript" src="//underpantsjokeimmunity.com/c0/b9/83/c0b98336a8afb5203ff0a29fdd1444ea.js"></script>
+  <script type="text/javascript" src="//underpantsjokeimmunity.com/37/b9/97/37b997e11ddd57b7e335c36ea2bb672a.js"></script>
+  <script async="async" data-cfasync="false" src="//underpantsjokeimmunity.com/5cef9dcf409e83584d347d6b6e0faa93/invoke.js"></script>
+
+</body>
+</html>
